@@ -1,0 +1,10 @@
+Angular TemplateEditor
+
+I've worked on this project the latest 9 months. It's an email editor with drag and drop functionality.
+I've used the following frameworks technologies:
+	RequireJS
+	AngularjS
+	Twitter Bootstrap for layout
+	Amplify for localstorage
+	jquery for utils
+	jqueryUI for drag and drop, and utils

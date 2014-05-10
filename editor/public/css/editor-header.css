@@ -1,0 +1,147 @@
+﻿#editor-app
+{
+    width:980px;
+   /* 980px => 100% */
+}
+
+
+#editor-header
+{
+    height: 54px;
+}
+
+#steps
+{
+    width:71.43%;
+}
+
+#action-bar
+{
+    width:27.55%;
+    margin-left:5px;
+}
+
+#action-bar > div.span7
+{
+    /*100% => 270px*/
+    width:55.56%;
+}
+
+#save-info
+{
+    width:41%
+}
+
+.step{
+    width:145px;
+    height:41px;
+    float:left;
+    background-color:#7d7d7d;
+    background-image:url('/Images/BeforeBefore.gif');
+    background-position:right;
+    background-repeat:no-repeat;
+    text-decoration:none;
+    color:white;
+}
+
+.step.active{
+    background-color:#e41b23;
+    background-image:url('/Images/rightActive.gif');
+    background-position:right;
+}
+
+.step.prevActive{
+    background-color:#bbbbbb;
+    background-image:url('/Images/leftActive.gif');
+    background-position:right;
+}
+
+.step.before{
+    background-color:#bbbbbb;
+    background-image:url('/Images/AfterAfter.gif');
+    background-position:right;
+}
+
+.step.last{
+    background-image:none;
+    width:125px;
+}
+
+.step > span.order
+{
+    height:17px;
+    width:10px;
+    color:black;
+    padding:6px 10px 7px 10px;
+    font-weight:bold;
+    font-size:14px;
+    margin:5px 5px 0 16px;
+    float:left;    
+    background: transparent url('/images/circle.png') no-repeat center;
+}
+
+.step > span.description{
+    width:43px;
+    float:left;
+    font-size:10px;
+    font-weight:bold;
+    text-transform:uppercase;
+    margin-top:8px;
+}
+
+a.step.nextStep:hover > span.order
+{
+    background: transparent url('/images/circleRed.png') no-repeat center;
+}
+
+#action-bar  a.prev, #action-bar  a.next
+{
+    /*100% => 270px*/
+    color:#444;  
+    width: 65px;
+    font-size:10px;
+    font-weight:bold;
+    text-decoration:none;
+    display:block;    
+}
+
+#action-bar a.prev + div.separator
+{
+    /*100% => 270px*/
+    width:5px; 
+    padding-top:7px;
+    margin:0 0 0 7px ;
+}
+
+#action-bar a.prev
+{
+    background: transparent url('/Images/BackButton.gif') no-repeat left;
+    padding: 7px 0 0 32px;
+    float:left;
+}
+
+#action-bar a.prev:hover
+{
+    background: transparent url('/Images/BackButton_Over.gif') no-repeat left;
+}
+
+#action-bar a.next
+{
+    background: transparent url('/Images/NextButton.gif') no-repeat right;
+    padding-top:7px;
+    float:right;
+}
+
+#action-bar a.next:hover
+{
+    background: transparent url('/Images/NextButton_Over.gif') no-repeat right;
+}
+
+#save-info > small{
+    font-size:11px;
+    font-family:  Arial;
+}
+
+label.control-label{
+    font-size:12px;
+}

@@ -1,0 +1,11 @@
+﻿<ul class="nav bs-sidenav" data-ng-show="folders.length > 0">
+    <li data-ng-repeat="folder in folders" data-ng-class="{active : folder.id == activeFolderId }">
+        <a data-ng-click="folderClicked(folder, false)">{{folder.name}} ({{folder.count}})</a>
+
+        <ul class="nav bs-sidenav" data-ng-show="folder.children.length > 0">
+            <li data-ng-repeat="child in folder.children" data-ng-class="{active : child.id == activeSubfolderId }">
+                <a data-ng-click="folderClicked(child, true)">{{child.name}} ({{child.count}})</a>
+            </li>
+        </ul>
+    </li>
+</ul>

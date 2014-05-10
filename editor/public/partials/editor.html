@@ -1,0 +1,100 @@
+﻿<script type="text/javascript" src="/scripts/lib/ckeditor/ckeditor.js"></script>
+<script src="/scripts/lib/imgmap.js" type="text/javascript"></script>
+
+<!-- Message Data Form -->
+<div class="row-fluid" data-ng-form="true" name="messageDataForm">
+    <div class="span9 offset1 form-horizontal">
+        <div class="control-group" data-ng-class="{error: submitted && messageDataForm.name.$error.required}">
+            <label class="control-label span2">Message Name: </label>
+            <input type="text" name="name" value="" data-ng-required="true" class="span5" data-ng-model="messageData.name" />
+            <span class="help-inline" data-ng-show="submitted && messageDataForm.name.$error.required">Required</span>
+        </div>
+        <div class="control-group" data-ng-class="{error: submitted && messageDataForm.from.$error.required}">
+            <label class="control-label span2">From: </label>
+            <input type="text" value="" name="from" data-ng-required="true" class="span5" data-ng-model="messageData.from" />
+            <span class="help-inline" data-ng-show="submitted && messageDataForm.from.$error.required">Required</span>
+        </div>
+        <div class="control-group" data-ng-class="{error: submitted && messageDataForm.subject.$error.required }">
+            <label class="control-label span2">Subject: </label>
+            <input id="subject" type="text" value="" name="subject" data-ng-required="true" class="span7" data-ng-model="messageData.subject" data-enter="true"  />            
+            <span class="help-inline" data-ng-show="submitted && messageDataForm.subject.$error.required">Required</span>
+        </div>         
+    </div>
+    <div class="span2">
+        <a class="btn sendATest" data-ng-disabled="!messageData.id" data-ng-click="showSendATest()" href="javascript:;">
+            <label>SEND A TEST</label>
+        </a>                
+    </div>
+</div>
+<!-- End Message Data Form-->
+<div class="row-fluid">
+    <!--Left SideBar-->
+    <div class="span2 left-sidebar">
+        <div class="navbar row-fluid">
+            <div class="navbar-inner">
+                <h6>Add Content</h6>
+            </div>        
+        </div>
+        <div class="editor-content row-fluid">
+             <div class="row-fluid">
+               <table id="layoutContentBlocks">
+                    <tr class="droppableContentBlock ui-helper-clearfix" data-ng-repeat="block in layoutContentBlocks">
+                    </tr>
+               </table>
+            </div>
+        </div>
+    </div>
+    <!--End Left SideBar-->
+    <!--Main Content-->
+    <div class="span10 main-content">
+       <div class="navbar row-fluid">
+            <div class="navbar-inner">  
+                <ul class="nav">
+                    <li>
+                        <h6>Edit Email</h6>
+                    </li>
+                </ul>                           
+               <ul class="nav pull-right">
+                    <li>
+                        <input type="button" value="Undo" data-ng-class="{disabled: !undoEnabled}" class="btn undo" data-ng-disabled="!undoEnabled"  data-ng-click="undo()"/>
+                        <input type="button" value="Redo" data-ng-class="{disabled: !redoEnabled}" class="btn redo" data-ng-disabled="!redoEnabled" data-ng-click="redo()"/>
+                    </li>
+                </ul>       
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div id="editorCanvas" class="row-fluid content ui-corner-all" data-ng-bind-html="editor">            
+            </div>
+        </div>
+    </div>
+    <!--End Main Content-->
+</div>
+
+<!-- View Templates -->
+<div data-edit-content-view="true" data-ng-show="false">
+    <img src="/Images/editorcontentactivedrag.png" class="droppableContentBlockDrag" style="position:relative; z-index:10000; top:-75px; left:95px;" />
+    <table>
+        <tr class="dragging"><td><div><img src="/Images/editortableactivedrag.png" /><p>Drop Here!</p></div></td></tr>
+    </table>
+
+    <div class="ui-widget-overlay"></div>
+   <div class="contentBlockHoverMenuBar ui-corner-all clearfix">
+       <a href="javascript:;" title="Move" class="drag btn btn-inverse text-center"><i class="icon-move icon-white"></i></a>
+       <a href="javascript:;" title="Duplicate" data-ng-click="duplicate()" class="btn btn-inverse text-center"><i class="icon-duplicate"></i></a>
+       <a href="javascript:;" title="Delete" data-ng-click="destroy()" class="btn btn-inverse text-center" ><i class="icon-trash icon-white"></i></a>
+    </div>
+</div>
+<!-- End View Templates -->
+
+<!--Send a Test PopUp-->
+<div send-a-test-modal="true" show-send-a-test-modal="showSendATestModal"></div>
+
+<!-- Validation Message Modal -->
+
+<div data-bootstrap-modal="true" 
+     data-show-modal="showValidationMessage" 
+     data-modal-title="Oops"
+     data-cancel-button="Close">
+    {{validationErrors}}
+</div>
+<div data-finalized-message="true" data-show-finalized-alert="showFinalizedAlert"></div>

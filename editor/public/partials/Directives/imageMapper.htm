@@ -1,0 +1,40 @@
+﻿<div class="navbar">
+    <div class="navbar-inner">									
+        <ul class="nav">							
+            <li>
+                <a href="javascript:;" data-ng-click="removeMap()"><i class="icon icon-trash"></i>Remove Map</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li data-ng-class="{active: drawShape == 'rect' }">
+                <a href="javascript:;" data-ng-click="drawShape = 'rect'" ><i class="icon icon-th-large"></i>Rectangle</a>
+            </li>
+            <li class="divider-vertical"></li>
+            <li data-ng-class="{active: drawShape == 'circle' }">
+                <a href="javascript:;" data-ng-click="drawShape = 'circle'"><i class="icon icon-plus-sign"></i>Circle</a>
+            </li>										
+        </ul>
+    </div>
+</div>			
+<div class="mapper-body"></div>
+<div class="mapper-shapes form-inline" data-ng-form="true" name="shapeForm" data-ng-show="showImageMapper" novalidate>
+    <div class="row-fluid">
+        <div class="control-group span5" data-ng-class="{ error: shapeForm.shapehref.$invalid }">
+            <label for="shapehref">Link to</label>                	
+            <input type="text" name="shapehref" class="input-medium" data-ng-pattern="linktoRegex" data-ng-disabled="!currentShape" data-ng-model="currentShape.href" required style="font-size: 12px;"/>		
+        </div>
+        <div class="control-group span4" data-ng-class="{ error: shapeForm.shapealt.$invalid }">
+            <label for="shapealt">Tooltip</label>		                	
+            <input type="text" name="shapealt" class="input-small" data-ng-model="currentShape.alt" data-ng-disabled="!currentShape" />
+        </div>
+        <div class="control-group span3">
+            <input type="button" class="btn btn-danger btn-mini" data-ng-disabled="shapeForm.$invalid || !currentShape" data-ng-click="saveShape(currentShape)" value="Save" />
+            <input type="button" class="btn btn-mini" data-ng-disabled="!currentShape" data-ng-click="removeShape(currentShape.id)" value="Delete" />
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4 control-group" data-ng-class="{ error: shapeForm.shapehref.$invalid }">
+            <span class="help-inline" data-ng-show="currentShape && shapeForm.shapehref.$error.required">Link to Required</span>	
+            <span class="help-inline" data-ng-show="currentShape && shapeForm.shapehref.$error.pattern">Invalid mail or url</span>				                
+        </div>
+    </div>
+</div>

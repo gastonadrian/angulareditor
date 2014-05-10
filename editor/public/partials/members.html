@@ -1,0 +1,230 @@
+﻿<div class="row-fluid main-content">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <ul>
+                <li data-ng-class="{ 'span4': fullSupportedClient, 'span6': !fullSupportedClient }" class="text-center">
+                    <h6>Select Recipients</h6>        
+                </li>
+                <li class="span4 text-center" data-ng-show="fullSupportedClient">
+                    <h6>Post to Social</h6>        
+                </li>
+                <li data-ng-class="{ 'span4': fullSupportedClient, 'span6': !fullSupportedClient }" class="text-center">
+                    <h6>Set Time</h6>        
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="select-members" data-ng-form="true" name="members">
+
+        <!-- Select Members -->
+        <div data-ng-class="{ 'span4': fullSupportedClient, 'span6 sm-padding': !fullSupportedClient }">            
+            <div class="row-fluid">
+                <div class="control-group text-center" data-ng-class="{error: selectedStores().length == 0}">
+                    
+                    <strong data-ng-show="selectedStores().length" data-ng-pluralize="true" count="recipientCount" 
+                            when="{ 
+                                '0': '0 recipient selected. ', 
+                                '1': '1 recipient selected. ', 
+                                'other': '{} recipients selected. '}"></strong>
+                    <strong data-ng-show="!members.$dirty && selectedStores().length == 0">Select a store.</strong>
+                    <strong data-ng-show="members.$dirty && !selectedStores().length" class="help-inline">At least one store is required.</strong>
+                    <!--<a href="javascript:;" alt="help" class="icon icon-question-sign"></a>    -->
+                </div>
+                
+            </div>
+            <div class="row-fluid">       
+                <div class="control-group">
+                    <label class="control-label">Lists</label>
+                    <div class="controls">
+                        <select name="lists" data-ng-model="selectedList" data-ng-options="list.Name for list in recipientLists"></select>
+                        <!--<span class="help-inline" data-ng-show="selectRecipientsForm.list.$error.required">Select a List</span>-->
+                    </div>
+                </div>
+                <div class="control-group" data-ng-cloak data-ng-show="guestCodes.length > 0 && selectedList.Id === 0">
+                    <select name="guestcodes" multiple="multiple" 
+                            data-ng-click="guestCodesUpdated = true" 
+                            data-ng-mouseleave="updateCount()" 
+                            data-ng-disabled="selectedList.Id != 0" 
+                            data-ng-model="selectedGuestCodes" 
+                            data-ng-options="g.Code as g.Code + ' (' + (g.MemberCount | number) + ')' for g in guestCodes"></select>
+                    <div class="text-center">
+                        <a class="btn btn-link" data-ng-click="selectedGuestCodes = [];updateRecipientCount();" href="javascript:;">Unselect All</a>
+                        <label class="control-label">To select multiple codes, press Ctrl (Cmd on Mac) while clicking on the codes you want.</label>
+                    </div>
+                </div>
+                <div class="control-group" data-ng-class="{error: members.$dirty && selectedStores().length == 0}">
+                    <label class="control-label">Locations</label>
+                    <span class="help-inline" data-ng-show="members.$dirty && selectedStores().length == 0">Select at least one Store</span>
+                    <div class="controls">
+                        <a class="btn btn-link" data-ng-click="checkAll(true)" href="javascript:;">Select All</a> | <a class="btn btn-link" data-ng-click="checkAll(false)" href="javascript:;">Clear All</a>
+                        <ul class="unstyled">
+                            <li data-ng-repeat="store in recipientStores" class="row-fluid">
+                                <label class="checkbox">
+                                    <!--https://github.com/angular/angular.js/issues/1100-->
+                                    <input type="checkbox" 
+                                           value="{{store.Id}}"
+                                           data-ng-model="store.checked" 
+                                           data-ng-checked="store.checked"
+                                           name="selectedStores" 
+                                           data-ng-required="$parent.selectedStores().length == 0" />{{store.Code}} - {{store.Name}} ({{store.MemberCount | number}})
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Select Members -->
+        
+        <!-- Social Media Accounts -->
+        <div class="span4" data-ng-show="fullSupportedClient">
+            <div class="row-fluid text-center">
+                <strong data-ng-pluralize="true" count="selectedSocialAccounts.length" 
+                        when="{ 
+                            '0': 'Select an account. ', 
+                            '1': '1 social account selected. ', 
+                            'other': '{} social accounts selected. '}"></strong><!--<a href="javascript:;" class="icon icon-question-sign"></a>-->
+            </div>
+            <div id="panel-accounts">
+                <div class="row-fluid" data-ng-show="accounts.length && socialMediaEnabled">
+                    <p>Select which Social Media accounts to which you'd like to post this email</p>
+                </div>
+                <div class="row-fluid" data-ng-show="accounts.length && socialMediaEnabled">
+                    <p>Post to:</p>    
+                </div>
+                <div class="row-fluid" id="accounts-list" data-ng-show="accounts.length && socialMediaEnabled">
+                    <ul class="unstyled">
+                        <li data-ng-repeat="account in accounts" data-ng-click="selectAccount($index)">
+                            <div class="span2" 
+                                 data-ng-class="{ 
+                                    'social-icon-facebook': account.SocialMediaTypeId === facebookSocialMediaTypeId, 
+                                    'social-icon-twitter': account.SocialMediaTypeId === twitterSocialMediaTypeId,
+                                     'social-icon-foursquare': account.SocialMediaTypeId === foursquareSocialMediaTypeId }">
+                                
+                                <img data-ng-src="{{account.ProfileImageUrl}}" class="social-profile-image" alt="{{account.NickName}}" />
+                                <div class="social-icon"></div>    
+                                <div data-ng-class="{'profile-selected': !!account.Selected}"></div>
+                            </div>
+                            <div class="span10">
+                                <span>{{account.NickName}}</span>    
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row-fluid text-center" style="margin-top: 10px;" data-ng-show="accounts.length && socialMediaEnabled">
+                    <a class="btn btn-link btn-mini" data-ng-click="selectAllAccounts(true)" href="javascript:;">Select All</a>|<a class="btn btn-link btn-mini" data-ng-click="selectAllAccounts(false)" href="javascript:;">Deselect All</a>
+                </div>
+                <div class="row-fluid text-center" data-ng-show="socialMediaEnabled">
+                    <a class="btn btn-success" href="javascript:;" data-ng-click="showAddAccountModal = true"><i class="icon-white icon-plus"></i> Add an account</a>
+                </div>
+                <div class="row-fluid" style="margin-top: 20px;" data-ng-show="accounts.length && socialMediaEnabled">
+                    <span>Type your message. We'll insert the link</span>
+                    <textarea rows="4" cols="20" class="span12" data-ng-model="socialMediaMessage"></textarea>{{socialMediaPostCharactersLeft}} characters left.
+                    <label class="checkbox">
+                        <input type="checkbox" class="input-small" data-ng-model="socialMediaIncludePreview"/> Include a preview of the email in my post.    
+                    </label>
+                </div>
+                <div class="row-fluid" data-ng-hide="socialMediaEnabled">
+                    <p>You can post this email to your Facebook, Twiter and Foursquare accounts! We'll include a picture of your email with your post. Add Social Media Marketing to your Fishbowl account.</p>
+                    <a href="javascript:;" class="btn btn-link underline" data-ng-click="showLearnMoreSocialModal = true">Learn More about Social Media Marketing</a>
+                </div>
+            </div>
+            <div data-bootstrap-modal="true" 
+                 data-show-modal="showAddAccountModal"
+                 data-modal-title="Add an account"
+                 data-close-callback="addAccountClosed()"
+                 data-modal-content-type="iframe"
+                 data-modal-content-url="addAccountModalUrl"
+                 data-cancel-button="Close">
+            </div>
+            <div data-bootstrap-modal="true" 
+                 data-show-modal="showLearnMoreSocialModal" 
+                 data-modal-title="About Social Media Marketing"
+                 data-modal-content-type="iframe"
+                 data-modal-content-url="learnMoreAboutSocialUrl"
+                 data-cancel-button="Close">
+            </div>
+        </div>
+        <!-- End Social Media Accounts-->
+
+        <!-- Select Time -->
+        <div data-ng-class="{ 'span4': fullSupportedClient, 'span6': !fullSupportedClient }">
+            <div class="row-fluid text-center">
+                <strong>Set Time. </strong><!--<a href="javascript:;" class="icon icon-question-sign"></a>-->
+            </div>
+            <div class="row-fluid form-inline">
+                <div class="control-group">
+                    <label class="radio">
+                        <input type="radio" data-ng-model="sendNow" value="{{true}}" name="selectedSendDate" data-ng-change="sendNowChanged()"/>Send Now
+                    </label>
+                    <label class="radio">
+                        <input type="radio" data-ng-model="sendNow" value="{{false}}" name="selectedSendDate" data-ng-change="sendNowChanged()"/>Send Later
+                    </label>               
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Date to Send</label>
+                    <div class="controls">
+                        <input type="text" class="input-small" data-ng-disabled="sendNow === 'true'" data-show-callback="datepickerClick()" jquery-datepicker="true" data-ng-model="selectedDate" />    
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Time to Send</label>
+                    <div class="controls">
+                        <select class="input-small" style="width: 65px" data-ng-model="selectedHourFull" data-ng-disabled="sendNow === 'true'">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>    
+                        <select class="input-small" style="width: 65px" data-ng-model="selectedMinuteFull" data-ng-disabled="sendNow === 'true'">
+                            <option value="0">:00</option>
+                            <option value="25">:15</option>
+                            <option value="50">:30</option>
+                            <option value="75">:45</option>               
+                        </select>
+                        <select class="input-small" style="width: 65px" data-ng-model="selectedAmPmFull" data-ng-disabled="sendNow === 'true'">
+                            <option value="am">am</option>
+                            <option value="pm">pm</option>              
+                        </select>                    
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">{{timeZone}}</label>
+                </div>
+                <div class="control-group">
+                    <input type="button" class="btn btn-primary" 
+                           data-ng-disabled="!scheduleEnabled" 
+                           value="{{ sendNow === 'true' && 'SEND' || 'SCHEDULE' }}" 
+                           data-ng-click="schedule()"/>
+                </div>
+                <div class="control-group">
+                    <h6>{{recipientCount}} recipients selected</h6>
+                </div>
+            </div>
+        </div>
+        <!-- End Select Time -->
+    </div>
+</div>
+<!--End Main Content-->
+<div data-bootstrap-modal="true" 
+     data-show-modal="showValidationMessage" 
+     data-modal-title="Warning!"
+     data-cancel-button="Close">
+    {{validationErrors}}
+</div>
+<div id="billing-modal" 
+        data-bootstrap-modal="true" 
+        data-suppressX="true"
+        data-show-modal="showBillingModal" 
+        data-modal-content-type="iframe"
+        data-modal-content-url="modalUrl"
+        data-modal-title="{{modalTitle}}">   
+</div>

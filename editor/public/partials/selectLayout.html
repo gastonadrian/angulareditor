@@ -1,0 +1,12 @@
+﻿<div data-bootstrap-modal="true" 
+     data-show-modal="showSelectLayoutModal" 
+     data-modal-title="Select Layout"
+     data-confirmation-button="Select" 
+     data-cancel-button="Cancel"
+     data-confirmation-callback="confirmationCallback()" 
+     data-close-callback="closeCallback()">
+    <span style="font-size:14px;">For beta, there is just one layout. More will be added soon, so for now just click Select to continue.</span>
+    <div data-ng-repeat="layout in layouts" class="text-center">
+        <img data-ng-src="{{layout.thumbnailUrl}}" width="200" height="200" alt="{{layout.name}}" />
+    </div>
+</div>

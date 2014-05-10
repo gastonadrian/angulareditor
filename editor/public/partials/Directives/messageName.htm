@@ -1,0 +1,19 @@
+﻿<div data-bootstrap-modal="true" 
+     data-show-modal="showInputModal" 
+     data-modal-title="Create a New Email"
+     data-confirmation-button="OK" 
+     data-cancel-button="Cancel"
+     data-close-callback="modalCancelCallback()"
+     data-confirmation-callback="modalOkCallback()">
+    <p>Enter a name to identify your email. This name is NOT displayed in your emails. It will help you identify each email in your account.</p>
+    <div class="row-fluid form-horizontal" data-ng-form="true" name="emailName">
+        <div class="control-group" data-ng-class="{ 'error': emailName.$dirty && !messageHeader.name.length }">
+            <label class="control-label mail-name-label" for="mailName">New Mail Name:</label>
+            <div class="controls">
+                <input type="text" id="mailName" class="input-large" maxlength="75" data-ng-model="messageHeader.name" data-focus="true" data-ng-bind="bindEnterKey()" required/>
+                <span class="help-inline error">* </span>
+                <span data-ng-show="emailName.$dirty && !messageHeader.name.length" class="help-inline">Required</span>
+            </div>
+        </div>
+    </div>
+</div>

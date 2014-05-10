@@ -1,0 +1,24 @@
+﻿<div data-bootstrap-modal="true" 
+     data-show-modal="showSendATestModal" 
+     data-modal-title="Send a Test"
+     data-confirmation-button="Send a Test" 
+     data-cancel-button="Cancel"
+     data-confirmation-callback="sendATest()"
+     data-css-class="sendATestModal">
+        <div data-message-preview="true" 
+             data-selected-store="data.selectedStore" 
+             data-is-draft="true" 
+             data-store-selector-label="Please send a test using the following store location information:" 
+             data-wait-for-enterprise="true">
+        </div>
+        <div class="form-vertical" data-ng-form="true" name="sendatestform">
+            <div class="control-group" data-ng-class="{error: submitted && sendatestform.emailaddress.$error.required}">
+                <label>Send To:</label>
+                <textarea name="emailaddress" data-ng-required="true" data-ng-model="data.emailAddress"></textarea>
+                <span class="help-inline" data-ng-show="submitted && sendatestform.emailaddress.$error.required">Send To address is required</span>
+            </div>
+            <div id="sendATestValidationMessage" class="control-group error">
+                <span class="help-inline">{{data.sendATestValidationErrors}}</span>
+            </div>
+        </div>
+</div>

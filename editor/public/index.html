@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Angular JS D&D Editor</title>
+	<link href="/css/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="/css/bootstrap.css" rel="stylesheet">
+	<link href="/css/pace.css" rel="stylesheet">
+	<link href="/css/editor-header.css" rel="stylesheet">
+	<link href="/css/editor.css" rel="stylesheet">
+	<link href="/css/angular-csp.css" rel="stylesheet">
+    <!--[if lte IE 9]>
+        <link href="/css/editor-ie.css" rel="stylesheet"/>
+    <![endif]-->
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div id="editor-app" class="container-fluid">
+				<div class="ng-cloak" data-alert-modal="true" 
+		             data-show-alert="showAlert">
+		            <div class="text-center"><div class="loading-spinner"></div> {{alertMessage}}</div>
+		        </div>
+		        <div id="editor-header" class="navbar ng-cloak" data-main-app-directive="true" data-ng-show="showNavigation">
+					<div class="navbar-inner">
+						<div class="container">
+							<div class="nav-collapse collapse">
+								<ul class="nav">
+									<li data-ng-repeat="step in steps" data-ng-class="{active: step.active }">
+										<!--data-ng-class="{before: step.before, prevActive:step.prev, active: step.active, nextStep: step.next, last: step.last}"-->
+										<a data-ng-href="#{{step.url}}">
+						                    <span class="order" data-ng-bind="step.order"></span>
+						                    <span class="description" data-ng-bind="step.description"></span>
+						                </a>
+									</li>
+								</ul>
+								<ul id="action-bar" class="nav pull-right">
+									<li data-ng-show="hasBack">
+										<a href="javascript:;" data-ng-href="#{{backUrl}}" >BACK</a>
+									</li>
+									<li data-ng-show="hasBack&&hasNext" class="separator">
+										<span>|</span>
+									</li>
+									<li data-ng-show="hasNext">
+										<a href="javascript:;" data-ng-href="#{{nextUrl}}" >NEXT</a>
+									</li>
+									<li id="save-info">
+										<input type="button" data-ng-click="save()" data-ng-class="{'disabled': !saveEnable }" data-ng-disabled="!saveEnable" class="btn btn-small btn-danger" data-ng-attr-value="{{saveButtonText}}" />                    
+					                    <img src="/Images/loading-new.gif" class="loading" alt="Loading" data-ng-show="showLoading"/>
+					                    <br />
+					                    <small data-ng-bind="lastSaved"></small>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+		        <div class="row-fluid" data-ng-view></div>
+			</div>
+		</div>
+	</div>
+	<!--<script src="/scripts/lib/jquery-1.9.1.min.js"></script>
+	<script src="/scripts/lib/jquery-ui-1.10.3.custom.min.js"></script>
+	<script src="/scripts/lib/amplify.store.min.js"></script>
+	<script src="/scripts/lib/angular.js"></script>
+	<script src="/scripts/lib/ui-bootstrap-0.4.0.js"></script>
+	<script src="/scripts/lib/angular-resource.js"></script>
+	<script src="/scripts/lib/ng-upload.js"></script>
+	<script src="/scripts/lib/require.js"></script>
+	<script src="/scripts/lib/stacktrace.js"></script>
+	<script src="/scripts/lib/pace.js"></script>
+	<script src="/scripts/lib/angular-route.js"></script>
+
+	<script src="/scripts/app/app.js"></script>
+	<script src="/scripts/app/controllers.js"></script>
+	<script src="/scripts/app/services.js"></script>
+	<script src="/scripts/app/configuration.js"></script>
+	<script src="/scripts/app/directives.js"></script>
+	<script src="/scripts/app/editorSpecifications.js"></script>
+	<script src="/scripts/main.js"></script>-->
+	<script src="/scripts/lib/require.js" data-main="/scripts/main.js"></script>
+
+</body>
+</html>

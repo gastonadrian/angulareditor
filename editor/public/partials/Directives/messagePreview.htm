@@ -1,0 +1,27 @@
+﻿<div class="messagePreview">
+    <div tabset="true">
+        <div tab="true" heading="HTML" select="mailFormatChanged(htmlTab, false)">
+            <div>
+                <span class="text-muted">SUBJECT:  {{subject}}</span>
+            </div>
+            <div>
+                <span class="pull-left text-muted">FROM:  {{from}}</span>
+                <span class="pull-right text-info">{{ isDraft == "true" && "DRAFT" || "FINAL" }}</span>
+            </div>
+            <div preview-iframe="true" src="{{htmlTab.url}}" width="680" >
+            </div>
+        </div>
+        <div tab="true" heading="Text" select="mailFormatChanged(textTab, false)">
+            <pre class="pre-scrollable">{{textTab.content}}</pre>
+        </div>
+        <div tab="true" heading="Online" select="mailFormatChanged(onlineTab, false)">
+            <div preview-iframe="true" src="{{onlineTab.url}}" width="680"></div>
+        </div>
+    </div>
+    <div class="control-group storeSelector">
+        <label>{{storeSelectorLabel}}</label>
+        <select data-ng-model="selectedStore" 
+                data-ng-options="store.Name for store in stores" 
+                class="input-xlarge"></select>
+    </div>
+</div>

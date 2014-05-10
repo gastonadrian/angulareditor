@@ -1,0 +1,16 @@
+﻿    <div class="bootstrap-modal ng-cloak" data-ng-show="showModal">
+        <div class="modal" data-ng-class="cssClass" >
+            <div class="modal-header">
+                <button type="button" class="close" data-ng-hide="!!confirmationButton || !!cancelButton || suppressX" data-ng-click="cancel()">×</button>
+                <h4>{{modalTitle}}</h4>
+            </div>
+            <div class="modal-body">
+                <div  data-ng-transclude="true"></div>
+            </div>
+            <div class="modal-footer" data-ng-show="!!confirmationButton || !!cancelButton">
+                <input type="button" class="btn btn-danger" value="{{confirmationButton}}" data-ng-click="confirm()" data-ng-show="confirmationButton" />
+                <input type="button" class="btn btn-link" value="{{cancelButton}}" data-ng-click="cancel()" data-ng-show="cancelButton" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop ng-cloak" data-ng-show="showModal"></div>

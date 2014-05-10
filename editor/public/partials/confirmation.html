@@ -1,0 +1,87 @@
+﻿<!--Main Content-->
+<div class="span10 offset1 main-content">
+    <div class="navbar row-fluid">
+        <div class="navbar-inner">  
+            <h6>CONFIRMATION</h6>
+        </div>
+    </div>
+    <div class="row-fluid" style="margin-top: 10px;">
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>{{messageData.name}}</strong> has been <span data-ng-show="messageData.cancelAvailable">scheduled to be </span>sent.</span>
+            </div>            
+        </div>
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>Subject Line:</strong> {{messageData.subject}}</span>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span3 offset1">
+                <span class="text-muted"><strong>Date:</strong> {{messageData.date}}</span>
+            </div>
+            <div class="span3">
+                <span class="text-muted"><strong>Time:</strong> {{messageData.time}}</span>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>Send to:</strong> {{messageData.recipientsCount}} members</span>
+            </div>
+        </div>
+        <div class="row-fluid" data-ng-hide="guestCodes">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>List:</strong>  {{messageData.list.Name}}</span>
+            </div>
+        </div>
+         <div class="row-fluid" data-ng-show="guestCodes">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>Guest Codes:</strong>  {{guestCodes}}</span>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>Locations:</strong>  {{stores}}</span>
+            </div>
+        </div>
+        <div class="row-fluid" data-ng-show="socialMediaAccounts">
+            <div class="span10 offset1">
+                <span class="text-muted">This email will be shared on the following Social Media Accounts 30 minutes after the email is scheduled to go out:</span>
+            </div>
+        </div>
+        <div class="row-fluid" data-ng-show="socialMediaAccounts">
+            <div class="span10 offset1">
+                <span class="text-muted"><strong>Social Media:</strong> {{socialMediaAccounts}}</span>
+            </div>
+        </div>
+        <div class="row-fluid text-center">
+            <input type="button" class="btn btn-large btn-primary" value="Cancel and Edit" data-ng-click="cancelAndEdit()" data-ng-show="messageData.cancelAvailable"/>
+            <input type="button" class="btn btn-large btn-primary" value="Copy" data-ng-click="copy()"/>
+        </div>
+        <div class="row-fluid" style="margin-top: 20px;">
+            <div class="span10 offset1">
+                <span class="pull-left text-muted"><strong>FROM:</strong>  {{messageData.from}}</span>
+            </div>
+        </div>
+        <div class="row-fluid" style="margin-bottom: 20px;">            
+            <div class="span10 offset1" preview-iframe="true" src="{{previewUrl}}" width="670" height="500" style="border: 1px solid black;"></div>
+        </div>                
+    </div>
+</div>
+<div data-bootstrap-modal="true" 
+     data-show-modal="showCancelModal" 
+     data-modal-title="Cancel and Edit"
+     data-confirmation-button="Yes, continue" 
+     data-cancel-button="Nevermind"
+     data-confirmation-callback="confirmationCallback()">
+    <p>Are you sure you want to cancel this email? Any social media post associated with this email would also be cancelled.</p>
+    <p>Clicking yes will allow you to make edits to this email.</p>
+</div>
+
+<div data-bootstrap-modal="true" 
+     data-show-modal="showValidationMessage" 
+     data-modal-title="Cancel and Edit"
+     data-cancel-button="Close">
+    {{validationErrors}}
+</div>
+<!--End Main Content-->

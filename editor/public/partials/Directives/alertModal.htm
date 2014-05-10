@@ -1,0 +1,8 @@
+﻿<div class="alert alert-block alert-default ng-cloak" data-ng-show="showAlert">
+    <button type="button" class="close" data-ng-hide="!cancelButton" data-ng-click="cancel()">×</button>
+    <h4 class="alert-heading">{{alertTitle}}</h4>
+    <div data-ng-transclude="true"></div>
+    <input type="button" class="btn btn-danger" value="{{confirmationButton}}" data-ng-click="confirm()" data-ng-show="confirmationButton" />
+    <input type="button" class="btn btn-link" value="{{cancelButton}}" data-ng-click="cancel()" data-ng-show="cancelButton" />
+</div>
+<div class="modal-backdrop ng-cloak" data-ng-show="showAlert"></div>
